@@ -1,0 +1,30 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  transition: all .2s linear;
+}
+
+.button:hover:not(:disabled) {
+  box-shadow: 1px 0 8px var(--color-button-accent);
+  transform: scale(1.1);
+}
+
+.round {
+  width: 1.9rem;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  font-size: 0.5rem;
+  background-color: var(--color-button-main);
+  color: var(--color-button-accent);
+}
+
+.square {
+  border-radius: 8px;
+  width: 3rem; 
+  aspect-ratio: 1;
+  background: transparent;
+  border: 2px solid var(--color-button-accept);
+  color: var(--color-text-main);
+}

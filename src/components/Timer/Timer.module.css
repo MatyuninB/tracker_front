@@ -1,0 +1,17 @@
+.blink {
+  animation: blinkAnim 2s ease-in-out infinite;
+}
+
+.count {
+	width: 8rem;
+}
+
+.title {
+	color: var(--color-text-soft);
+}
+
+@keyframes blinkAnim {
+	0% {opacity: 0.1}
+	50%{opacity: 1}
+	100% {opacity: 0.1}
+}

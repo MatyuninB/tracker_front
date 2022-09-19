@@ -1,0 +1,60 @@
+.snackbar {
+  position: fixed;
+  top: calc(4rem * var(--count, 0));
+  right: 1vw;
+  margin-top: 1vw;
+  background-color: var(--color-button-accept);
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  min-width: min(100vw,  200px);
+  height: 2.4rem;
+  padding: 0.5rem;
+  animation: fadeIn 3s;
+  opacity: 0;
+}
+
+.snackbar > p {
+  padding: 0 0.3rem;
+}
+
+.title {
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.description {
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  padding: 0;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.snackbar.error {
+  background-color: var(--color-button-decline);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+};

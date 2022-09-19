@@ -1,0 +1,28 @@
+:root {
+  /*
+    main colors
+  */
+  --color-main: hsl(215, 33%, 11%);
+  --color-main-dark: hsl(0, 0%, 9%);
+  --color-main-light: hsl(215, 26%, 14%);
+  --color-button-main: hsla(250, 27%, 58%, 1);
+
+  --color-icon-main: hsla(250, 27%, 58%, 1);
+  --color-button-accent: hsla(39, 94%, 45%, 0.5);
+
+  --color-button-accept: hsl(120, 100%, 25%);
+  --color-button-decline: hsl(0, 100%, 50%);
+  /*
+    typogtaphy
+  */
+  --color-text-main: hsl(245, 58%, 96%);
+  --color-text-secondary: hsl(0, 0%, 100%, 60%);
+  --color-text-accent: hsl(0, 0%, 100%);
+  --color-text-soft: hsl(250, 27%, 58%);
+
+  /*
+    gardients
+  */
+  --color-selected-gardient: linear-gradient(0deg, hsl(0, 0%, 9%), hsl(0, 0%, 9%)),
+linear-gradient(90deg, hsla(347, 100%, 49%, 0.502) 3.98%, hsl(275, 100%, 49%) 100%);
+}
