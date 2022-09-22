@@ -1,0 +1,1 @@
+export type PromiseState = "pending" | "fullfield" | "reject" | undefined;

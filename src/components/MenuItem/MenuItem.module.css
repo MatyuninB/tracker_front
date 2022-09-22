@@ -1,0 +1,21 @@
+.menu_item {
+  --color-gardient: linear-gradient(90deg, rgba(80,81,249,0.1) 0%, rgba(80,81,249,0) 100%);
+  cursor: pointer;
+  background-color: var(--color-white);
+  list-style-type: none;
+  padding: 16px 24px;
+}
+
+.menu_item:hover {
+  background: var(--color-gardient);
+}
+.menu_item:active {
+  background: var(--color-gardient);
+}
+.menu_item::selection {
+  background: var(--color-gardient);
+}
+.menu_item:focus {
+  background: var(--color-gardient);
+  outline: none;
+}

@@ -9,12 +9,12 @@ import React, {
 } from "react";
 import { api } from "src/api";
 import type { TimerP } from "src/components/Timer/Timer.component";
-import { secondsToTimeArr, timer } from "src/helpers/timer.helper";
+import { secondsToTimeArr } from "src/helpers/timer.helper";
 import type { RCP } from "types/global";
 import type { MainTimerContollerP } from "./MainTimer.controller";
 
 export interface TotalTimerContollerP extends RCP, MainTimerContollerP {}
-
+const timer = (...any: any[]) => {}
 export const TotalTimer = ({ children, title = "" }: TotalTimerContollerP) => {
   const [time, setTime] = useState<string[]>(["00", "00", "00"]);
   const [timerStarted, setTimerStarted] = useState(false);
@@ -34,12 +34,11 @@ export const TotalTimer = ({ children, title = "" }: TotalTimerContollerP) => {
     initialTime.current = currentTime;
 
     const mainPoints = timepoints?.time?.filter(
-      (point: { [key: string]: string }) => point?.type === "main"
+      (point) => point?.type === "main"
     );
 
-    if (mainPoints[mainPoints.length - 1].state === "start") {
+    if (mainPoints?.[mainPoints.length - 1].state === "start") {
       setTimerStarted(true);
-      interval.current = timer(setTime, initialTime, dayjs());
     }
   }, []);
 

@@ -7,10 +7,14 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { api } from "src/api";
 import type { TimerP } from "src/components/Timer/Timer.component";
 import { useSnack } from "src/controllers/Snackbar/hooks/useSnack";
-import { secondsToTimeArr, timer } from "src/helpers/timer.helper";
+import { getPastTime, secondsToTimeArr } from "src/helpers/timer.helper";
+import { useTimer } from "src/hooks/useTimer.hook";
+import { timeActions } from "src/store/actions/time.actions";
+import { timeLoadingSelector, timepointsSelector } from "src/store/selectors/time.selector";
 import type { RCP } from "types/global";
 
 export interface MainTimerContollerP extends RCP {
@@ -21,58 +25,49 @@ export interface MainTimerContollerP extends RCP {
 }
 
 export const MainTimer = ({ children, title = "",  disabled }: MainTimerContollerP) => {
-  const [time, setTime] = useState<string[]>(["00", "00", "00"]);
   const [timerStarted, setTimerStarted] = useState(false);
-  const interval = useRef<NodeJS.Timer>();
-  const initialTime = useRef<number | null>(0);
-  const {alert, error} = useSnack();
+  const { time, currentTime, setTime, onTimerStart, onTimerStop } = useTimer();
+  const { error } = useSnack();
+  const dispatch = useDispatch();
+  const timepoints = useSelector(timepointsSelector);
+  const loadingState = useSelector(timeLoadingSelector);
+  
 
   const getInitialData = useCallback(async () => {
-    const timepoints = await api.time.getTodayTimepoints();
+    if (!loadingState) dispatch(timeActions.getTodayTime())
+    if (loadingState !== "fullfield" || !timepoints) return;
     if (!timepoints.status) {
-      initialTime.current = null;
+      currentTime.current = 0;
       return;
     }
-    
-    const currentTime = timepoints.calculatedTime.timers.find(
-      (e: { [key: string]: string }) => e.title === title
-    ).time;
 
-
-    initialTime.current = currentTime;
-
-    const mainPoints = timepoints?.time?.filter(
-      (point: { [key: string]: string }) => point?.type === "main" && title === point.title
-    );
-
-    if (mainPoints[mainPoints.length - 1].state === "start") {
+    const taskTime = timepoints?.calculatedTime?.timers?.find(e => e.title === title)?.time || 0;
+    const taskTimepoints = timepoints?.time?.filter(e => e.title === title);
+    const lastTimepoint = taskTimepoints?.[taskTimepoints?.length - 1];
+    const totalTime = lastTimepoint?.state === "stop" ? taskTime : taskTime + getPastTime(dayjs(lastTimepoint?.time))
+    setTime(secondsToTimeArr(totalTime));
+    currentTime.current = totalTime;
+    if (lastTimepoint?.state === "start") {
+      onTimerStart();
       setTimerStarted(true);
-      const curentTime = dayjs().diff(dayjs(mainPoints[mainPoints.length - 1].time));
-      if (curentTime && initialTime.current) initialTime.current += curentTime;
-      interval.current = timer(setTime, initialTime, dayjs());
-    } else {
-      setTime(secondsToTimeArr(currentTime));
     }
-  }, []);
+  }, [timepoints, loadingState, timerStarted]);
 
   useEffect(() => {
     getInitialData();
-    return () => clearInterval(interval.current);
-  }, [getInitialData]);
+  }, [getInitialData, timepoints]);
 
   const onClick = useCallback(async (state) => {
     try {
       if (state) {
         await api.time.changeMainState({ state: "start", title: title });
-        if (!initialTime.current) initialTime.current = 0;
-        interval.current = timer(setTime, initialTime, dayjs());
+        onTimerStart();
       } else {
         await api.time.changeMainState({ state: "stop", title: title });
-        clearInterval(interval.current);
+        onTimerStop();
       }
       setTimerStarted(state);
     } catch (e) {
-      console.dir(e)
       error("Timer Error", (e as Error).message);
     }
   }, []);
@@ -83,5 +78,6 @@ export const MainTimer = ({ children, title = "",  disabled }: MainTimerContolle
     started: timerStarted,
     title,
     disabled,
+    loading: loadingState === "pending",
   });
 };

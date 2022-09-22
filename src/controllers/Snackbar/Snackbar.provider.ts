@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
 export interface SnackBarMessage {
+  id?: string;
   type: "alert" | "error";
   title?: string;
   description?: string;

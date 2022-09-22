@@ -3,10 +3,10 @@
   width: 100vw;
   overflow: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 3rem;
+  padding: 25px 0;
   background-color: var(--color-main);
 }
 

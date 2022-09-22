@@ -10,6 +10,10 @@
 	color: var(--color-text-soft);
 }
 
+.loading * {
+  opacity: 0;
+}
+
 @keyframes blinkAnim {
 	0% {opacity: 0.1}
 	50%{opacity: 1}

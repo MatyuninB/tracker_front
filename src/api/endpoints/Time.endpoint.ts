@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import type { BaseContructor } from "../types/base";
+import type { TotalTime } from "../types/time.type";
 import { EndpointBase } from "./abstract/Base.endoint";
 
 export type TimerState = "stop" | "start" | "sub-start" | "sub-stop"
@@ -23,7 +24,7 @@ export class Time extends EndpointBase {
     this.lastTime = {}
   }
 
-  public getTodayTimepoints() {
+  public getTodayTimepoints(): Promise<TotalTime> {
     return this.request({
       method: "get",
       endpoint: "time/time-point",

@@ -1,0 +1,14 @@
+.backdrop {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 200vh;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: fixed;
+  z-index: 99;
+}
+
+.backdrop.transparent {
+  background-color: transparent;
+}
+

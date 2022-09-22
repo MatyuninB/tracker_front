@@ -1,17 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./styles/global.css";
-import { TestPage } from "./pages/Test.page";
 import duration from "dayjs/plugin/duration";
 import dayjs from "dayjs";
-import { SnackbarController } from "./controllers/Snackbar/Snackbar.controller";
+import { App } from "./pages";
+import "./styles/global.css";
+import { Timer } from "./helpers/timer.helper";
+
+new Timer();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <SnackbarController>
-      <TestPage />
-    </SnackbarController>
-  </React.StrictMode>,
+  <App />,
   document.getElementById("root")
 );
 

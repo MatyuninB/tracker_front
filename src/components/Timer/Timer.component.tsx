@@ -12,6 +12,7 @@ export interface TimerP extends RCP {
   time?: string[];
   title?: string;
   disabled?: boolean;
+  loading?: boolean;
 }
 
 export const Timer = ({
@@ -20,14 +21,15 @@ export const Timer = ({
   time = ["00", "00", "00"],
   title,
   disabled,
+  loading,
 }: TimerP) => {
   const handleStateChange = () => {
     const newState = !started;
     onStateChange?.(newState);
   };
-
+ 
   return (
-    <Card>
+    <Card className={clsx({[style.loading]: loading})}>
       {title && <Typography className={style.title}>{title}:</Typography>}
       <Typography className={style.count}>
         <Typography variant={<span />} bold fontSize="2rem">

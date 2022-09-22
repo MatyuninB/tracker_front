@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React, { CSSProperties, HTMLAttributes } from "react";
 import type { HTMLProps, ReactNode } from "react";
 import type { RCP } from "types/global";
 import styles from "./IconButton.module.css";
@@ -8,18 +8,21 @@ export interface IconButtonP extends HTMLAttributes<HTMLButtonElement>, RCP {
   icon?: ReactNode;
   round?: boolean;
   disabled?: boolean;
+  size?: string;
+  type?: "submit" | "reset"
 }
 
-export const IconButton = ({ icon, round, className, ...props }: IconButtonP) => {
+export const IconButton = ({ icon, round, className, children, size, ...props }: IconButtonP) => {
   return (
     <button
+      style={{ "--size": size} as CSSProperties}
       className={clsx(className, styles.button, {
         [styles.round]: round,
         [styles.square]: !round,
       })}
       {...props}
     >
-      {icon}
+      {icon || children}
     </button>
   );
 };
